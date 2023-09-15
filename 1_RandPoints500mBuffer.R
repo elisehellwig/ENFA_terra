@@ -1,7 +1,7 @@
-setwd("/Volumes/AvivasDissertation_2018_4158472461/Dissertation/GISData_Jan2018UpdatedNDVI/")
+setwd("/Users/elisehellwig/Library/CloudStorage/GoogleDrive-echellwig@ucdavis.edu/Shared drives/Alpine Mammals Updated/GISData_Jan2018UpdatedNDVI")
 
-library(rgdal)
-library(raster)
+library(sf)
+library(terra)
 
 #==============================================================================
 # Niche factor analysis based on spatial locations of XXX collected along 21
@@ -14,7 +14,7 @@ library(raster)
 
 library(dismo)
 #Read 500M Buffer Transect File into R
-B <- readOGR("SNV/SNVTransects", layer = "SNVtrans500mbuff")
+snv_transects <- st_read("SNV/SNVTransects", layer = "SNVtrans500mbuff")
 
 # select 50000 random points
 # set seed to assure that the examples will always
