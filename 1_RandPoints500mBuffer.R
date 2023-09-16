@@ -25,17 +25,11 @@ set.seed(1963)
 snv_rand_pts <- spatSample(snv_transects, 5e4, method = "random")
 #figure out how to filter for above 2500m later
 
-xy <- data.frame(geom(snv_rand_pts)[,c('x', 'y')])
-names(xy) <-  c("UTMEW", "UTMNS")
-
-snv_rand_pts <- cbind(snv_rand_pts, xy)
-
-snv_rand_pts <- snv_rand_pts[,names(xy)]
-
-snv_rand_pts$Species <- 'Random' #random points 'species'
-
 snv_rand_pts$PA <- 0 #presence/available is 0 for available
 
+snv_rand_pts$Species <- 'Random'
+
+snv_rand_pts <- snv_rand_pts[,c('Species', 'PA')]
 
 #save original transects as geojson (aka not a shapefile)
 # writeVector(snv_transects, file.path(outpath, 'SNV_Transects_Buffered_500m.geojson'),
