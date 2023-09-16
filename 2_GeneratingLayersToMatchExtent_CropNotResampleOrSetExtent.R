@@ -6,7 +6,7 @@ library(terra)
 
 #all files have 30m x 30m resolution but different extents
 rast_files <- c("Elevation.tif", #elevation
-                "Aspect.tif", #aspect
+                #"Aspect.tif", #aspect
                 "Slope.tif", #slope
                 "TRI.tif", #ruggedness
                 "NDVIcv.tif", #NDVI coef of var
@@ -36,7 +36,8 @@ r_croplist <- lapply(rlist, crop, min_extent)
 
 r <- rast(r_croplist)
 
-writeRaster(r, file.path(outpath, 'EnvironmentData.GTiff'), filetype='GTiff')
+writeRaster(r, file.path(outpath, 'EnvironmentData.GTiff'), filetype='GTiff',
+            overwrite=TRUE)
 
 # 
 # #Get Topographical Data 
