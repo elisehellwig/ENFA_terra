@@ -5,6 +5,7 @@
 
 # Load packages required to define the pipeline:
 library(targets)
+source('enfa_functions.R')
 source('targets_functions.R')
 # library(tarchetypes) # Load other packages as needed.
 
@@ -71,7 +72,18 @@ list(
   ),
   
   tar_target(
-    name = stack_raster_data,
+    name = species_file, 
+    command =  "/Users/elisehellwig/Library/CloudStorage/GoogleDrive-echellwig@ucdavis.edu/My Drive/Transfer/Data/species_names",
+    format = "file"
+  ),
+  
+  tar_target(
+    name = species,
+    command = fread(species_file)
+  ),
+  
+  tar_target(
+    name = raster_data,
     command = stack_raster_data(raster_file, shared_drive)
   ),
 
@@ -80,4 +92,23 @@ list(
     command = sample_random_points(transect_file, "SNVtrans500mbuff", 5e4),
   ),
   
+  tar_target(
+    name = presence_points,
+    command = combine_presence_locations(shared_drive, species$Acronym)
+  ),
+  
+  tar_target(
+    name = pa_data,
+    command = extract_values(presence_points, random_points, raster_data)
+  ),
+  
+  tar_target(
+    name = enfa_model,
+    command = run_enfa(species$Acronym, pa_data)
+  ),
+  
+  tar_target(
+    name = histogram_plot,
+    command = plot_histogram(enfa_model, species$Species, 25)
+  )
 )
