@@ -207,7 +207,7 @@ HistData <- function(mod, species) {
   
 }
 
-run_enfa <- function(abrev, df) {
+run_enfa_species <- function(abrev, df) {
   sp_data <- df[Species %in% c(abrev, 'Random')]
   
   pca <- dudi.pca(sp_data[,4:ncol(df)], scannf=FALSE)
