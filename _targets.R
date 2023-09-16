@@ -5,11 +5,12 @@
 
 # Load packages required to define the pipeline:
 library(targets)
+source('targets_functions.R')
 # library(tarchetypes) # Load other packages as needed.
 
 # Set target options:
 tar_option_set(
-  packages = c("terra", "data.table", "ade4", "adehabitatHS", "magrittr", 
+  packages = c("terra", "geodata", "data.table", "ade4", "adehabitatHS", "magrittr", 
                "ggordiplots") # packages that your targets need to run
   
   #format = "qs", # Optionally set the default storage format. qs is fast.
@@ -52,12 +53,29 @@ tar_source()
 # Replace the target list below with your own:
 list(
   tar_target(
-    name = data,
-    command = tibble(x = rnorm(100), y = rnorm(100))
-    # format = "feather" # efficient storage for large data frames
+    name = raster_file,
+    command = "/Users/elisehellwig/Library/CloudStorage/GoogleDrive-echellwig@ucdavis.edu/My Drive/Transfer/Data/raster_file_names.csv",
+    format = "file" # efficient storage for large data frames
   ),
+  
   tar_target(
-    name = model,
-    command = coefficients(lm(y ~ x, data = data))
+    name = transect_file, 
+    command =  "/Users/elisehellwig/Library/CloudStorage/GoogleDrive-echellwig@ucdavis.edu/My Drive/Transfer/Data/SNV_Transects_Buffered_500m.geojson",
+    format = "file"
+  ),
+  
+  tar_target(
+    name = stack_raster_data,
+    command = stack_raster_data(raster_file)
+  ),
+
+  tar_target(
+    name = random_points,
+    command = sample_random_points(transect_file, "SNVtrans500mbuff", 5e4),
+  ),
+  
+  tar_target(
+    name = extract_values,
+    command = extract_values(stack_raster_data, random_points)
   )
 )
