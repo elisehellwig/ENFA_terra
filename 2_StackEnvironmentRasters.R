@@ -37,9 +37,8 @@ tmin_wc <- worldclim_tile('tmin', lon=-118, lat=36.5, path=temppath)$tile_15_wc2
 
 rlist[[8]] <- tmin_wc$tile_15_wc2.1_30s_tmin_1+273.15
 
-rlist_utm11 <- lapply(rlist, function(r) {
-  project(r, crs("epsg:26911"))
-})
+rlist_utm11 <- lapply(rlist, function(r) project(r, crs("epsg:26911")) )
+
 
 rlist_identical <- lapply(rlist_utm11, resample, rlist_utm11[[1]])
 
