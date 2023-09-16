@@ -1,13 +1,16 @@
-setwd("/Volumes/AvivasDissertation_2018_4158472461/Dissertation/GISData_Jan2018UpdatedNDVI") 
+setwd("/Users/elisehellwig/Library/CloudStorage/GoogleDrive-echellwig@ucdavis.edu/Shared drives/Alpine Mammals Updated/GISData_Jan2018UpdatedNDVI")
+outpath <- "/Users/elisehellwig/Library/CloudStorage/GoogleDrive-echellwig@ucdavis.edu/My Drive/Transfer/Data"
 
 #Niche Factor Analysis
 #Marmot Data
+library(data.table)
+library(ade4)
 library(adehabitatHS)
-library(adehabitatMA)
-library(vegan)
-library(raster)
-library(sp)
-library(maptools)
+
+acronyms <- c("Spebel", "Marfla", "Spelat")
+
+pa <- fread(file.path(outpath, 'PresenceAvailableData.csv'))
+
 
 #==============================================================================
 # Niche factor analysis based on spatial locations of Marmot collected along 21
@@ -18,31 +21,11 @@ library(maptools)
 # feet). 
 #==============================================================================
 
-
-#Read in CSV with variables from extracted Raster Stack for Used (500m Buffer) and Available
-Marflahabvars.temp3 <- read.csv("Used_And_Avail_500mBuff_HabitatVariablesMarfla.csv", header=TRUE)
-str(Marflahabvars.temp3)
-head(Marflahabvars.temp3)
-
-# You need to generate a vector for "present" (i.e. observed; = 1) and random
-# (available; = 0) and it needs to be the first field (column) of the dataframe
-# Since you are going to remove the UTM coordinates you might as well just use
-# one of those columns after renaming it and put the vector of 0's and 1's in
-# it
-
-Marflahabvars <- Marflahabvars.temp3
-str(Marflahabvars)
-
 #these were creating the presence/available data we already created in step 4
 #names(Marflahabvars)[1] <- "Marfla"
 #Marflahabvars$Marfla <- 0
 #Marflahabvars$Marfla[1:nrow(habvarsMarfla)] <- 1
 
-Marflahabvars$UTMNS <- NULL
-Marflahabvars$UTMEW <- NULL
-
-str(Marflahabvars)
-head(Marflahabvars)
 
 #This gets rid of the information we no longer need (marmot siting ID, because variables already extracted)
 marfla.pa <- Marflahabvars$Marfla
@@ -53,15 +36,11 @@ str(Marflahabvars)
 # Pool Aspen and Mixed land cover types with Shrub, because there is not enough Aspen and Mixed is effectively shrub
 Marflahabvars$Shrub30m <- Marflahabvars$Shrub30m + Marflahabvars$Aspen30m + Marflahabvars$Mixed30m
 #Get rid of columns for Aspen and Mixed after pooling into Shrub
-Marflahabvars$Aspen30m <- NULL
-Marflahabvars$Mixed30m <- NULL
+
 
 
 cor(Marflahabvars)#checking how correlated variables are
-str(Marflahabvars)
-str(marfla.pa)
-head(marfla.pa)
-tail(marfla.pa)
+
 
 
 # Used habitat
@@ -85,6 +64,21 @@ length(weights[weights == 0])
 # Next step requires PCA first
 # Initial PCA of the available habitat variables
 #dudi is from ADE package, for doing PCA
+
+
+run_enfa <- function(abrev, df) {
+  sp_data <- df[Species %in% c(abrev, 'Random')]
+  
+  pca <- dudi.pca(sp_data[,4:ncol(df)], scannf=FALSE)
+
+  enfa(pca, sp_data$PA, scannf=FALSE)
+}
+
+
+enfa_list <- lapply(acronyms, run_enfa, pa)
+
+saveRDS(enfa_list, file.path(outpath, 'ENFA_Model_Output.RDS'))
+
 habavail.pca <- dudi.pca(Marflahabvars, scannf=FALSE)
 
 saveRDS(habavail.pca, 'Marfla_PCA_output.RDS')
