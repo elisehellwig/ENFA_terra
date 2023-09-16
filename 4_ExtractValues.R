@@ -11,7 +11,7 @@ env_data <- rast(file.path(outpath,"EnvironmentData.GTiff"))
 #Add Random Points (available habitat) generated earlier.  50,000 random points 500m from transects. 
 rand_pts <- vect('Updated_Data/SVN_Random_Points.geojson')
 
-rodent_abrevs <- c("Marfla", "Spelat", "Spebel", "Pika")
+rodent_abrevs <- c("Spebel", "Marfla", "Spelat")
 
 rodent_fns <- sapply(rodent_abrevs, function(sciname) {
   paste0("Locations/Transects/", sciname, "/", sciname, "CoordsSNV.shp")
