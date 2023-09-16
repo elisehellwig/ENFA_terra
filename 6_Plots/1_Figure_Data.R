@@ -1,6 +1,7 @@
 #install.packages('devtools')
 #devtools::install_github('jfq3/ggordiplots')
 
+outpath <- "/Users/elisehellwig/Library/CloudStorage/GoogleDrive-echellwig@ucdavis.edu/My Drive/Transfer/Data"
 
 # Setup -------------------------------------------------------------------
 
@@ -9,7 +10,7 @@ library(data.table)
 library(ggordiplots)
 library(magrittr)
 
-source('enfa_functions.R')
+source('6_Plots/enfa_functions.R')
 #imports mag(), ExtractVectors(), ExtractHull(), HistData()
 
 acronyms <- c( 'Urobel','Marfla', 'Callat')
@@ -21,18 +22,17 @@ species_names <- c("Belding's Ground Squirrel", 'Yellow-bellied Marmot',
 #Elise Generated Data
 
 # defines which variables correspond to which number/ID labels for the vectors
-key <- fread('data/VariableKey.csv') 
+key <- fread(file.path(outpath, 'VariableKey.csv')) 
 
 #Contains the position shifts for each of the vector labels so you can see them
-nudge <- fread('data/NudgeLabelPositions.csv') 
+nudge <- fread(file.path(outpath, 'NudgeLabelPositions.csv')) 
 
 
 #Model Generated Data
 
-#reads in ENFA Models, This comes from Chapter1_ENFA script 5_ENFA.R for each species
-modlist <- lapply(acronyms, function(n) {
-  readRDS(paste0('data/', n, '_ENFA_model_output.RDS'))
-})
+#reads in ENFA Models, This comes from 5_ENFA.R script
+modlist <-readRDS(file.path(outpath, 'ENFA_model_output.RDS'))
+
 
 # Calculations ------------------------------------------------------------
 
@@ -65,10 +65,10 @@ vects <- lapply(1:length(modlist), function(i) {
 
 # Save data ---------------------------------------------------------------
 
-fwrite(scores, 'data/Enfa_Scores_fig2.csv')
+fwrite(scores, file.path(outpath, 'Enfa_Scores_fig2.csv'))
 
-fwrite(hulls, 'data/Hulls_fig3.csv')
-fwrite(vects, 'data/Vectors_fig3.csv')
-fwrite(marginality, 'data/MarginPts_fig3.csv')
+fwrite(hulls, file.path(outpath, 'Hulls_fig3.csv'))
+fwrite(vects, file.path(outpath, 'Vectors_fig3.csv'))
+fwrite(marginality, file.path(outpath, 'MarginPts_fig3.csv'))
 
 
