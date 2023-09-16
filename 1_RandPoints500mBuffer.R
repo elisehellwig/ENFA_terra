@@ -2,7 +2,6 @@ setwd("/Users/elisehellwig/Library/CloudStorage/GoogleDrive-echellwig@ucdavis.ed
 
 outpath <- "/Users/elisehellwig/Library/CloudStorage/GoogleDrive-echellwig@ucdavis.edu/My Drive/Transfer/Data"
 
-library(sf)
 library(terra)
 
 #==============================================================================
