@@ -73,6 +73,12 @@ list(
   
   tar_target(
     name = species_file, 
+    command =  "/Users/elisehellwig/Library/CloudStorage/GoogleDrive-echellwig@ucdavis.edu/My Drive/Transfer/Data/species_names.csv",
+    format = "file"
+  ),
+  
+  tar_target(
+    name = species_file, 
     command =  "/Users/elisehellwig/Library/CloudStorage/GoogleDrive-echellwig@ucdavis.edu/My Drive/Transfer/Data/species_names",
     format = "file"
   ),
