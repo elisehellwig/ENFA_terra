@@ -1,40 +1,55 @@
 #I am trying Crop instead of setExtent (doesn't work during extract) or resample (which may distort).  Resample will distort a little bit.
-setwd("/Users/elisehellwig/Library/CloudStorage/GoogleDrive-echellwig@ucdavis.edu/Shared drives/Alpine Mammals Updated/GISData_March27_2019ClippedToTransects/TransectRasters")
+setwd("/Users/elisehellwig/Library/CloudStorage/GoogleDrive-echellwig@ucdavis.edu/Shared drives/Alpine Mammals Updated/GISData_Jan2018UpdatedNDVI")
 outpath <- "/Users/elisehellwig/Library/CloudStorage/GoogleDrive-echellwig@ucdavis.edu/My Drive/Transfer/Data"
+temppath <- "/Users/elisehellwig/Desktop/Temp"
 
 library(terra)
+library(geodata)
+
+innames <- c('Elevation', 'Slope', 'TRI', 'NDVIcv', 'NDVIMax', 'Precip0609', 'Precip1005',
+            'Tmin01', 'Tmax07', 'Snow', 'Aspen', 'Conifer', 'Meadow', 'Mixed',
+            'Rock', 'Shrub0')
+
+rnames <- c('Elevation', 'Slope', 'TRI', 'NDVIcv', 'NDVIMax', 'Precip0609', 'Precip1005',
+            'Tmin01', 'Tmax07', 'Snow', 'Conifer', 'Meadow', 'Rock', 'Shrub')
 
 #all files have 30m x 30m resolution but different extents
-rast_files <- c("Elevation.tif", #elevation
-                #"Aspect.tif", #aspect
-                "Slope.tif", #slope
-                "TRI.tif", #ruggedness
-                "NDVIcv.tif", #NDVI coef of var
-                "NDVIMax.tif", #NDVI
-                "Precip0609.tif", #growing season precip
-                "Precip1005.tif", #non growing season precip
-                "Tmin01.tif", #min temp in January
-                "Tmax07.tif", #max temp in July
-                "Snow.tif", # days w/o snow on ground
-                "Aspen.tif", #areas of Aspen land cover
-                "Conifer.tif", #areas of conifer land cover
-                "Meadow.tif", #areas of meadow land cover
-                "Mixed.tif", #areas of mixed type land cover
-                "Rock.tif", # areas of bare rock
-                "Shrub.tif") #areas of shrubland
-
-
-x <- rast(rast_files)
-
+rast_files <- c("SNV/Topography/Elevation30SNV.tif", #elevation
+                "SNV/Topography/Slope30SNV.tif", #slope
+                "SNV/Topography/TRI30SNV.tif", #ruggedness
+                "SNV/NDVI/NDVICVMeanMax1989_2015SNV.tif", #NDVI coef of var
+                "SNV/NDVI/NDVICVMeanMax1989_2015SNV.tif", #Max NDVI
+                "SNV/Climate/Precip/precip0609SNV.tif", #growing season precip
+                "SNV/Climate/Precip/precip1005SNV.tif", #non growing season precip
+                "SNV/Climate/Tmin/Tmin07SNV.tif", #min temp in January
+                "SNV/Climate/Tmax/Tmax07SNV.tif", #max temp in July
+                "SNV/Climate/Snow/SnowFreeDaysSNV.tif", # days w/o snow on ground
+                "SNV/Vegetation/Rasterveg/aspen30m.img", #areas of Aspen land cover
+                "SNV/Vegetation/Rasterveg/conifer30m.img", #areas of conifer land cover
+                "SNV/Vegetation/Rasterveg/meadow30m.img", #areas of meadow land cover
+                "SNV/Vegetation/Rasterveg/mixed30m.img", #areas of mixed type land cover
+                "SNV/Vegetation/Rasterveg/rock30m.img", # areas of bare rock
+                "SNV/Vegetation/Rasterveg/shrub30m.img") #areas of shrubland
 
 rlist <- lapply(rast_files, rast)
 
+tmin_wc <- worldclim_tile('tmin', lon=-118, lat=36.5, path=temppath)$tile_15_wc2.1_30s_tmin_1 
 
-min_extent <- Reduce(function(r1, r2) intersect(ext(r1), ext(r2)), rlist)
+rlist[[8]] <- tmin_wc$tile_15_wc2.1_30s_tmin_1+273.15
 
-r_croplist <- lapply(rlist, crop, min_extent)
+rlist_utm11 <- lapply(rlist, function(r) {
+  project(r, crs("epsg:26911"))
+})
 
-r <- rast(r_croplist)
+rlist_identical <- lapply(rlist_utm11, resample, rlist_utm11[[1]])
+
+r0 <- rast(rlist_identical)
+
+names(r0) <- innames
+
+r0$Shrub <- r0$Aspen + r0$Mixed + r0$Shrub0
+
+r <- r0[[rnames]]
 
 writeRaster(r, file.path(outpath, 'EnvironmentData.GTiff'), filetype='GTiff',
             overwrite=TRUE)
@@ -53,7 +68,7 @@ writeRaster(r, file.path(outpath, 'EnvironmentData.GTiff'), filetype='GTiff',
 # NDVICV<- rast("SNV/NDVI/NDVICVMeanMax1989_2015SNV.tif") 
 # NDVICV
 # #Max productivity
-# NDVIMeanMax <- rast("SNV/NDVI/NDVIMeanMax1989_2015SNV.tif") 
+# NDVIMeanMax <- rast("SNV/NDVI/NDVICVMeanMax1989_2015SNV.tif") 
 # NDVIMeanMax
 # 
 # #Get Climate Data
