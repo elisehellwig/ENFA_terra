@@ -10,7 +10,7 @@ GetVars <- function(mod) {
   return(names(mod$mar))
 }
 
-ExtractVectors <- function(mod, id_key, nudge, acronym, species, scalar=5) {
+ExtractVectors_species <- function(mod, id_key, nudge, acronym, species, scalar=5) {
   #Extracts data to plot vector arrows from the ENFA analysis
   
   #enfa    ENFA model, created using enfa() from adehabitatHS package
@@ -47,7 +47,7 @@ ExtractVectors <- function(mod, id_key, nudge, acronym, species, scalar=5) {
   return(coords)
 }
 
-ExtractHull <- function(mod, species) {
+ExtractHull_species <- function(mod, species) {
   #Calculates points to create hull polygon in a plot
   
   #mod      ENFA model, created using enfa() from adehabitatHS package
