@@ -10,7 +10,7 @@ library(data.table)
 library(ggordiplots)
 library(magrittr)
 
-source('6_Plots/enfa_functions.R')
+source('enfa_functions.R')
 #imports mag(), ExtractVectors(), ExtractHull(), HistData()
 
 acronyms <- c( 'Urobel','Marfla', 'Callat')
