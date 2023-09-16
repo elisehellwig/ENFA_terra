@@ -28,8 +28,3 @@ enfa_list <- lapply(acronyms, run_enfa, pa)
 
 saveRDS(enfa_list, file.path(outpath, 'ENFA_Model_Output.RDS'))
 
-habavail.pca <- dudi.pca(Marflahabvars, scannf=FALSE)
-
-saveRDS(habavail.pca, 'Marfla_PCA_output.RDS')
-saveRDS(weights, 'Marfla_weights.RDS')
-
