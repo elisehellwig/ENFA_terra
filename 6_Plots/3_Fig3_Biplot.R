@@ -1,3 +1,4 @@
+outpath <- "/Users/elisehellwig/Library/CloudStorage/GoogleDrive-echellwig@ucdavis.edu/My Drive/Transfer/Data"
 
 # Setup -------------------------------------------------------------------
 
@@ -17,13 +18,13 @@ species_names <- c("Belding's Ground Squirrel", 'Yellow-bellied Marmot',
 # Read In -----------------------------------------------------------------
 
 #generated in 1_Figure_Data.R
-hulls <- fread('data/Hulls_fig3.csv') #niche space polygon data
+hulls <- fread(file.path(outpath, 'Hulls_fig3.csv')) #niche space polygon data
 hulls$Species <- factor(hulls$Species, levels=species_names)
 
-vects <- fread('data/Vectors_fig3.csv') #data for ENFA vectors (arrows)
+vects <- fread(file.path(outpath, 'Vectors_fig3.csv')) #data for ENFA vectors (arrows)
 vects$Species <- factor(vects$Species, levels=species_names)
 
-marginality <- fread('data/MarginPts_fig3.csv') #data for plotting the marginality points
+marginality <- fread(file.path(outpath, 'MarginPts_fig3.csv')) #data for plotting the marginality points
 marginality$Species <- factor(marginality$Species, levels=species_names)
 
 # Create Plot -------------------------------------------------------------
@@ -66,7 +67,7 @@ bp <- ggplot(data=hulls) + #set first data source
 # Save Plot ---------------------------------------------------------------
 
 
-png('Plots/NicheSpaceBiplot.png', width = 1500, height=2000, res=150)
+png(file.path(outpath, 'Plots/NicheSpaceBiplot.png'), width = 1500, height=2000, res=150)
   bp
 dev.off()
 

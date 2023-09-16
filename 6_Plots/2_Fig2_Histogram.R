@@ -1,3 +1,4 @@
+outpath <- "/Users/elisehellwig/Library/CloudStorage/GoogleDrive-echellwig@ucdavis.edu/My Drive/Transfer/Data"
 
 # Setup -------------------------------------------------------------------
 
@@ -16,7 +17,7 @@ bin_num = 25
 # Read In Data ------------------------------------------------------------
 
 #ENFA scores, generated in 1_Figure_Data.R
-scores <- fread('data/Enfa_Scores_fig2.csv')
+scores <- fread(file.path(outpath, 'Enfa_Scores_fig2.csv'))
 scores$Species <- factor(scores$Species, levels=species_names)
 
 # Create Plot -------------------------------------------------------------
@@ -39,7 +40,6 @@ p <- ggplot(data=scores) + #set data source
   #plot both Available and Used data with fill but no outliens
   geom_histogram(aes(x=value, y=after_stat(density), group=AU, color=AU, fill=AU), 
                  position='identity', alpha=0.3, color=NA, bins=bin_num) +
-  
   scale_fill_manual(values=fills, name='Niche Space') + #add legend
   
   #create separate graphs by species and type (marginality vs specialization)
@@ -55,7 +55,7 @@ p <- ggplot(data=scores) + #set data source
 
 #Manually add in a black box around the white background of the Available 
 #Nice Space legend entry after image creation
-png('Plots/NicheSpaceHistogram.png', width = 2000, height=2000, res=150)
+png(file.path(outpath, 'Plots/NicheSpaceHistogram.png'), width = 2000, height=2000, res=150)
   p
 dev.off()
 
