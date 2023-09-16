@@ -52,6 +52,12 @@ tar_source()
 
 # Replace the target list below with your own:
 list(
+  
+  tar_target(
+    name = shared_drive,
+    command = "/Users/elisehellwig/Library/CloudStorage/GoogleDrive-echellwig@ucdavis.edu/Shared drives/Alpine Mammals Updated/GISData_Jan2018UpdatedNDVI"
+  ),
+  
   tar_target(
     name = raster_file,
     command = "/Users/elisehellwig/Library/CloudStorage/GoogleDrive-echellwig@ucdavis.edu/My Drive/Transfer/Data/raster_file_names.csv",
@@ -66,7 +72,7 @@ list(
   
   tar_target(
     name = stack_raster_data,
-    command = stack_raster_data(raster_file)
+    command = stack_raster_data(raster_file, shared_drive)
   ),
 
   tar_target(
@@ -74,8 +80,4 @@ list(
     command = sample_random_points(transect_file, "SNVtrans500mbuff", 5e4),
   ),
   
-  tar_target(
-    name = extract_values,
-    command = extract_values(stack_raster_data, random_points)
-  )
 )
