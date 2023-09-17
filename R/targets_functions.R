@@ -79,14 +79,17 @@ combine_presence_locations <- function(loc, acronyms) {
 extract_values <- function(pres, avail, env_data) {
   
   all_pts <- rbind(pres[,c('Species', 'PA')], avail)
-  
+
   all_pts$ID <- 1:nrow(all_pts)
   
-  pa_env <- extract(env_data, all_pts)
+  pa_env <- terra::extract(env_data, all_pts, ID=TRUE)
   
   pa_sv <- merge(all_pts, pa_env, by='ID')
   
   pa0 <- data.frame(pa_sv)
+  
+
+  #return(pa_sv)
 
   return(pa0[which(pa0$Elevation>2500), ])
   
@@ -97,10 +100,10 @@ run_enfa <- function(acronyms, data) {
 }
 
 
-plot_histogram <- function(mods, s_names, bin_num) {
+plot_histogram <- function(mods, species_names, bin_num) {
   
-  scores <- lapply(1:length(s_names), function(i) {
-    HistData(modlist[[i]], s_names[i])
+  scores <- lapply(1:length(species_names), function(i) {
+    HistData(mods[[i]], species_names[i])
   }) %>% rbindlist()
   
   scores$Species <- factor(scores$Species, levels=species_names)
@@ -127,9 +130,7 @@ plot_histogram <- function(mods, s_names, bin_num) {
           panel.grid.minor = element_blank(), #remove minor grid lines
           strip.text.x = element_text(size = 18)) #set plot titles to be a bit larger
   
-  png('Plots/NicheSpaceHistogram.png', width = 2000, height=2000, res=150)
   p
-  dev.off()
 }
 
 
@@ -148,7 +149,7 @@ extract_vectors <- function(mods, sp_df, v_label) {
   key <- unique(v_label[,.(Variable, ID)])
   
   vects <- lapply(1:length(mods), function(i) {
-    ExtractVectors_species(mods[[i]], key, v_label, sp_df$Acronyms[i],
+    ExtractVectors_species(mods[[i]], v_label, sp_df$Acronym[i],
                           sp_df$Species[i])
   }) %>% rbindlist()
   
@@ -222,9 +223,7 @@ create_biplot <- function(hulls, vects, marginality, species_names) {
           strip.text.x = element_text(size = 18)) #set plot subtitles at specific size
   
   
-  png('Plots/NicheSpaceBiplot.png', width = 1500, height=2000, res=150)
   bp
-  dev.off()
-  
+
   
 }
