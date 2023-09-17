@@ -5,8 +5,8 @@
 
 # Load packages required to define the pipeline:
 library(targets)
-source('enfa_functions.R')
-source('targets_functions.R')
+source('R/enfa_functions.R')
+source('R/targets_functions.R')
 # library(tarchetypes) # Load other packages as needed.
 
 # Set target options:

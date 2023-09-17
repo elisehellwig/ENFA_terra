@@ -1,4 +1,4 @@
-source("enfa_functions.R")
+source("R/enfa_functions.R")
 
 download_tmin <- function(path) {
   worldclim_tile('tmin', lon=-118, lat=36.5, 
