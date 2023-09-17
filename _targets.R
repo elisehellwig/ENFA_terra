@@ -12,7 +12,7 @@ source('targets_functions.R')
 # Set target options:
 tar_option_set(
   packages = c("terra", "geodata", "data.table", "ade4", "adehabitatHS", "magrittr", 
-               "ggordiplots") # packages that your targets need to run
+               "ggplot2", "ggordiplots") # packages that your targets need to run
   
   #format = "qs", # Optionally set the default storage format. qs is fast.
   #
@@ -78,14 +78,19 @@ list(
   ),
   
   tar_target(
-    name = species_file, 
-    command =  "/Users/elisehellwig/Library/CloudStorage/GoogleDrive-echellwig@ucdavis.edu/My Drive/Transfer/Data/species_names",
+    name = labels_file, 
+    command =  "/Users/elisehellwig/Library/CloudStorage/GoogleDrive-echellwig@ucdavis.edu/My Drive/Transfer/Data/vector_labels.csv",
     format = "file"
   ),
   
   tar_target(
     name = species,
     command = fread(species_file)
+  ),
+  
+  tar_target(
+    name = vec_labels,
+    command = fread(labels_file)
   ),
   
   tar_target(
@@ -116,5 +121,27 @@ list(
   tar_target(
     name = histogram_plot,
     command = plot_histogram(enfa_model, species$Species, 25)
+  ),
+  
+  tar_target(
+    name = hulls,
+    command = extract_hulls(enfa_model, species$Species)
+  ),
+  
+  tar_target(
+    name = vectors,
+    command = extract_vector(enfa_model, species, vec_labels)
+  ),
+  
+  tar_target(
+    name = marginality,
+    command = calculate_marginality(enfa_model, species)
+  ),
+  
+  
+  tar_target(
+    name = biplot,
+    command = create_biplot(hulls, vectors, marginality, species$Species)
   )
+  
 )
