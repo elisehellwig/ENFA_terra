@@ -127,10 +127,104 @@ plot_histogram <- function(mods, s_names, bin_num) {
           panel.grid.minor = element_blank(), #remove minor grid lines
           strip.text.x = element_text(size = 18)) #set plot titles to be a bit larger
   
-  return(p)
+  png('Plots/NicheSpaceHistogram.png', width = 2000, height=2000, res=150)
+  p
+  dev.off()
 }
 
 
+extract_hulls <- function(mods, species_names) {
+  hulls <- lapply(1:length(mods), function(i) {
+    ExtractHull_species(mods[[i]], species_names[i])
+  }) %>% rbindlist()
+  
+  hulls$Species <- factor(hulls$Species, levels=species_names)
+  
+  return(hulls)
+}
+
+extract_vectors <- function(mods, sp_df, v_label) {
+  
+  key <- unique(v_label[,.(Variable, ID)])
+  
+  vects <- lapply(1:length(mods), function(i) {
+    ExtractVectors_species(mods[[i]], key, v_label, sp_df$Acronyms[i],
+                          sp_df$Species[i])
+  }) %>% rbindlist()
+  
+  vects$Species <- factor(vects$Species, levels=sp_df$Species)
+  
+  
+  return(vects)
+  
+}
 
 
+calculate_marginality <- function(mods, species_names) {
+  marginality <- lapply(1:length(mods), function(i) {
+    data.table(Species=species_names[i], x=mag(mods[[i]]$mar), y=0)
+  }) %>% rbindlist()
+  
+  #dummy column so marginality points are all the same color
+  marginality[, Fill:='Marginality']
+  
+  marginality$Species <- factor(marginality$Species, levels=species_names)
+  
+  
+ return(marginality)
+   
+}
 
+create_biplot <- function(hulls, vects, marginality, species_names) {
+
+  #sets colors for distinguishing avaliable vs used niche space
+  niche_colors <- c('Available'='#d95f02', 'Used'='#7570b3')
+
+  #set color for marginality point
+  margin_color <- c('Marginality'='#1b9e77')
+
+  hulls$Species <- factor(hulls$Species, levels=species_names)
+  vects$Species <- factor(vects$Species, levels=species_names)
+  marginality$Species <- factor(marginality$Species, levels=species_names)
+  
+  
+  bp <- ggplot(data=hulls) + #set first data source
+    geom_hline(aes(yintercept=0), linetype='dashed', linewidth=0.2) + #add horizontal dashed line
+    geom_vline(aes(xintercept=0), linetype='dashed', linewidth=0.2) + #add vertical dashed line
+    
+    #add niche space polygons (oka hulls)
+    geom_polygon(data=hulls, aes(x=x, y=y, group=Group, color=Group), fill=NA) + 
+    
+    #add legend for niche space polygon colors
+    scale_color_manual(values = niche_colors, name='Niche Space')+
+    
+    #add vector arrows of each variable in model
+    geom_segment(data=vects, aes(x=0, y=0, xend=x, yend=y, group=Variable), 
+                 lineend = 'butt', linejoin = 'mitre', linewidth=0.3,
+                 arrow=arrow(length = unit(0.12, "cm"))) +
+    
+    #add labels to the vector arrows
+    geom_text(data=vects, aes(x=text_x, y=text_y, label=ID), size=4) +
+    
+    #add marginality point to plot
+    geom_point(data=marginality, aes(x=x, y=y, fill=Fill), size=3, pch = 21) +
+    
+    scale_fill_manual(values = margin_color, name="")+ #add legend for marginality point
+    
+    facet_wrap(~Species, nrow=3) + #breaking plots up by species
+    
+    labs(x='Marginality', y='Specialization') + #adding axis labels
+    
+    theme_bw(20) + # set 'font size' to 20
+    theme(panel.grid.major = element_blank(), #remove major grid lines
+          panel.grid.minor = element_blank(), #remove minor grid lines
+          #axis.title=element_text(size=18)   #set axes titles at specific size 
+          strip.text.x = element_text(size = 18)) #set plot subtitles at specific size
+  
+  
+  png('Plots/NicheSpaceBiplot.png', width = 1500, height=2000, res=150)
+  bp
+  dev.off()
+  
+  
+}
