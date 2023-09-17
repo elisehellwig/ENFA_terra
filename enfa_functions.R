@@ -3,13 +3,6 @@ mag <- function(x) {
   return(sqrt(sum(x^2)))
 }
 
-
-GetVars <- function(mod) {
-  #mod - enfa, ENFA model, created using enfa() from adehabitatHS package
-  #returns the names of the variables that were fed into an ENFA analysis
-  return(names(mod$mar))
-}
-
 ExtractVectors_species <- function(mod, id_key, nudge, acronym, species, scalar=5) {
   #Extracts data to plot vector arrows from the ENFA analysis
   
