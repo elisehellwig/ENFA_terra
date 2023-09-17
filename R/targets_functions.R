@@ -88,10 +88,11 @@ extract_values <- function(pres, avail, env_data) {
   
   pa0 <- data.frame(pa_sv)
   
+  high_ids <- which(pa0$Species!='Marfla' | pa0$Elevation > 2500)
+  
+  pa <- pa0[high_ids, ]
 
-  #return(pa_sv)
-
-  return(pa0[which(pa0$Elevation>2500), ])
+  return(pa)
   
 }
 
