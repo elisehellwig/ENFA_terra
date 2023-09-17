@@ -36,9 +36,9 @@ stack_raster_data <- function(file, path) {
 }
 
 
-sample_random_points <- function(file, layer, n) {
+sample_random_points <- function(file, n) {
   
-  snv_transects <- vect(file, layer = layer)
+  snv_transects <- vect(file)
   
   # select n random points
   # set seed to assure that the examples will always
