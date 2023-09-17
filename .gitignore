@@ -51,3 +51,6 @@ rsconnect/
 
 # Mac Stuff
 *.DS_Store
+
+# data
+Plots/
