@@ -10,9 +10,9 @@ library(targets)
 # Set target options:
 tar_option_set(
   packages = c("terra", "geodata", "data.table", "ade4", "adehabitatHS", "magrittr", 
-               "ggplot2", "ggordiplots") # packages that your targets need to run
+               "ggplot2", "ggordiplots"), # packages that your targets need to run
   
-  #format = "qs", # Optionally set the default storage format. qs is fast.
+  format = "qs", # Optionally set the default storage format. qs is fast.
   #
   # For distributed computing in tar_make(), supply a {crew} controller
   # as discussed at https://books.ropensci.org/targets/crew.html.
@@ -128,12 +128,12 @@ list(
   
   tar_target(
     name = vectors,
-    command = extract_vector(enfa_model, species, vec_labels)
+    command = extract_vectors(enfa_model, species, vec_labels)
   ),
   
   tar_target(
     name = marginality,
-    command = calculate_marginality(enfa_model, species)
+    command = calculate_marginality(enfa_model, species$Species)
   ),
   
   
