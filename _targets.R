@@ -98,7 +98,7 @@ list(
 
   tar_target(
     name = random_points,
-    command = sample_random_points(transect_file, "SNVtrans500mbuff", 5e4),
+    command = sample_random_points(transect_file, 5e4),
   ),
   
   tar_target(
