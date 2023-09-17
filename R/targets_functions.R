@@ -130,7 +130,9 @@ plot_histogram <- function(mods, species_names, bin_num) {
           panel.grid.minor = element_blank(), #remove minor grid lines
           strip.text.x = element_text(size = 18)) #set plot titles to be a bit larger
   
+  png('Plots/NicheSpaceHistogram.png', width = 2000, height=2000, res=150)
   p
+  dev.off()
 }
 
 
@@ -223,7 +225,7 @@ create_biplot <- function(hulls, vects, marginality, species_names) {
           strip.text.x = element_text(size = 18)) #set plot subtitles at specific size
   
   
+  png('Plots/NicheSpaceBiplot.png', width = 1500, height=2000, res=150)
   bp
-
-  
+  dev.off()
 }
