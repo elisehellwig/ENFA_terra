@@ -3,22 +3,20 @@ mag <- function(x) {
   return(sqrt(sum(x^2)))
 }
 
-ExtractVectors_species <- function(mod, id_key, nudge, acronym, species, scalar=5) {
+ExtractVectors_species <- function(mod, nudge, acronym, species, scalar=5) {
   #Extracts data to plot vector arrows from the ENFA analysis
   
   #enfa    ENFA model, created using enfa() from adehabitatHS package
-  #id_key  data.frame, containing the IDs for each variable in the ENFA model
-  #nudge   data.frame, containing nudge values for the labels of each variable 
+  #nudge   data.frame, containing IDs and nudge values for the labels of each variable 
   #acronym chr, species acronym, Marfla, Callat or Urobel
   #species chr, species common name
   #scalar  numeric, what to multiply the vectors by so they are on the same scale
     #as the niche space hulls
   
-  coords0 <- mod$co #extract vectors from the model
+  coords <- mod$co #extract vectors from the model
   
-  coords0$Variable <- row.names(coords0) #turn variable names into a column
-  coords <- merge(coords0, id_key, by='Variable') #add IDs
-  
+  coords$Variable <- row.names(coords) #turn variable names into a column
+
   #calculate magnitude of each vector (not currently used)
   coords$Magnitude <- sapply(1:nrow(coords), function(i) mag(coords[i, c('Mar', 'Spe1')]))
   
