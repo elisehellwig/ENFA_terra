@@ -1,0 +1,60 @@
+name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
+.Random.seed|object|7481b9f9d9aceb24|||||||||||||||
+biplot|stem|b3308072414a28e7|3e2134091771fc62|9b1e73f10d61c748|1001771468||t19632.6627609413s|14942e998a40a2dc|123109|rds|local|vector|||0.02||
+calculate_marginality|function|c5d0a8543856ee73|||||||||||||||
+combine_presence_locations|function|efc028ff3da8185d|||||||||||||||
+create_biplot|function|498b65c1521c68fb|||||||||||||||
+download_tmin|function|05e4f5d6e6a13c36|||||||||||||||
+enfa_model|stem|8197924ee0d52bd5|2f25c2fbae3a3843|73aa166a239ec716|641932556||t19632.6627364827s|3bdf1d06a9d8b779|7263673|rds|local|vector|||1.314||
+EnfaBiplot|function|dedc1d5b09a5bbc8|||||||||||||||
+extract_hulls|function|425c64cb6c6ac7cb|||||||||||||||
+extract_values|function|2f4fd339051c261d|||||||||||||||
+extract_vectors|function|39898fd199c61915|||||||||||||||
+ExtractHull_species|function|c64849687f01aa68|||||||||||||||
+ExtractVectors_species|function|de5428dcc10b134e|||||||||||||||
+HistData|function|88c60719deddb581|||||||||||||||
+histogram_plot|stem|7d29ea624411a06d|86b1dbe71642b9c0|559ca47288cd3af6|-1172873383||t19632.6627576891s|e8078a915f7e8287|19658787|rds|local|vector|||0.085||
+hulls|stem|6091e2cbab317764|b07d659586d39d48|33a1a3b0e9d1c1c0|-77668508||t19632.6627602758s|525f1e0929e5159a|1817|rds|local|vector|||0.216||
+labels_file|stem|ef46db3751d8e999|29c8a0fbace743e7|ef46db3751d8e999|832869238|/Users/elisehellwig/Library/CloudStorage/GoogleDrive-echellwig@ucdavis.edu/My Drive/Transfer/Data/vector_labels.csv|t19616.7570079517s|02a8accc0915289e|1110|file|local|vector|||0.001||
+mag|function|630115e5f1800704|||||||||||||||
+marginality|stem|045bd5944d2f3a60|de0cfeffbea5b697|fa47520ced153400|-1277872047||t19632.6627366129s|73e9d248c95c1f30|330|rds|local|vector|||0.007||
+pa_data|stem|f95fe05179a3a97d|94df789cd8ba19e1|0545aeadd84761c0|1826686162||t19632.6627176301s|26c90ba6d4170eb6|1266434|rds|local|vector|||0.62||
+plot_histogram|function|322baf823e83e7a2|||||||||||||||
+presence_points|stem|18e8f74a4aab2636|f29840a7acfc9914|8d6ac86c591386f3|-1663366609||t19632.6627077999s|564f4f0c5fc538bf|895641|rds|local|vector|||0.063||
+random_points|stem|3233a0b32c39b412|544c5f107b7ecafa|896ea1bb6aed084d|-33063662||t19632.6612398386s|ecd755dfda968987|881255|rds|local|vector|||11.098||
+raster_data|stem|2549477554c6e555|8affd2d78e46c6e8|f5c225f332b615dd|1432137055||t19632.6626913845s|a42ba4a8efa5e78e|867142|rds|local|vector|||124.538||
+raster_file|stem|ef46db3751d8e999|b9b1b53c922f1480|ef46db3751d8e999|-1883133292|/Users/elisehellwig/Library/CloudStorage/GoogleDrive-echellwig@ucdavis.edu/My Drive/Transfer/Data/raster_file_names.csv|t19617.2279112481s|f8b29d4ea3aa6684|702|file|local|vector|||0.001||
+run_enfa|function|5c04afce6bff9668|||||||||||||||
+run_enfa_species|function|58468944744935b0|||||||||||||||
+sample_random_points|function|aed9dd9f66fe310e|||||||||||||||
+shared_drive|stem|3f861f6ca015c5bb|599cba1abe528c40|ef46db3751d8e999|-942664865||t19648.8984401415s|23cbc8442f78eae6|173|rds|local|vector|||2.665||
+species|stem|e676878712931c9c|192b8e605f737d77|92dcda735a427497|-954574027||t19632.661239974s|24647c65900306d3|252|rds|local|vector|||0||
+species_file|stem|ef46db3751d8e999|84c360737502d507|ef46db3751d8e999|1164395730|/Users/elisehellwig/Library/CloudStorage/GoogleDrive-echellwig@ucdavis.edu/My Drive/Transfer/Data/species_names.csv|t19616.7375948456s|f21b4888ae8bdafc|118|file|local|vector|||0||
+stack_raster_data|function|f438db445920d18a|||||||||||||||
+transect_file|stem|ef46db3751d8e999|083f7d1a5fd0bf2a|ef46db3751d8e999|603977972|/Users/elisehellwig/Library/CloudStorage/GoogleDrive-echellwig@ucdavis.edu/My Drive/Transfer/Data/SNV_Transects_Buffered_500m.geojson|t19615.9029446721s|f359414bd28152ec|749031|file|local|vector|||0||
+vec_labels|stem|1516caddc61b779d|e34f9a5992972d2f|4166ddd329af7a7d|922893282||t19632.6611047539s||483|rds|local|vector|||0.146||Opened 1.084KB 1110 bytes file ok but could not memory map it. This is a 64bit process. There is probably not enough contiguous virtual memory available.
+vectors|stem|3909581955f23349|42dd8b1293f11047|73cc94d5018ea384|1501396789||t19632.662736835s|fc38d7367334f9ee|2746|rds|local|vector|||0.018||
+mag|function|630115e5f1800704
+download_tmin|function|05e4f5d6e6a13c36
+run_enfa_species|function|58468944744935b0
+HistData|function|88c60719deddb581
+ExtractHull_species|function|c64849687f01aa68
+sample_random_points|function|aed9dd9f66fe310e
+create_biplot|function|498b65c1521c68fb
+extract_values|function|2f4fd339051c261d
+combine_presence_locations|function|efc028ff3da8185d
+EnfaBiplot|function|dedc1d5b09a5bbc8
+ExtractVectors_species|function|de5428dcc10b134e
+calculate_marginality|function|c5d0a8543856ee73
+stack_raster_data|function|f438db445920d18a
+run_enfa|function|5c04afce6bff9668
+plot_histogram|function|322baf823e83e7a2
+extract_hulls|function|425c64cb6c6ac7cb
+extract_vectors|function|39898fd199c61915
+labels_file|stem|f84ea5e990367f8d|29c8a0fbace743e7|ef46db3751d8e999|832869238|/Users/elisehellwig/Library/CloudStorage/GoogleDrive-echellwig@ucdavis.edu/My Drive/Transfer/Data/vector_labels.csv|t19616.7570079517s|02a8accc0915289e|1110|file|local|vector|||2.828||
+transect_file|stem|0d1d7db217953ff0|083f7d1a5fd0bf2a|ef46db3751d8e999|603977972|/Users/elisehellwig/Library/CloudStorage/GoogleDrive-echellwig@ucdavis.edu/My Drive/Transfer/Data/SNV_Transects_Buffered_500m.geojson|t19615.9029446721s|f359414bd28152ec|749031|file|local|vector|||0||
+species_file|stem|433531e14d2e2da5|84c360737502d507|ef46db3751d8e999|1164395730|/Users/elisehellwig/Library/CloudStorage/GoogleDrive-echellwig@ucdavis.edu/My Drive/Transfer/Data/species_names.csv|t19616.7375948456s|f21b4888ae8bdafc|118|file|local|vector|||0.001||
+raster_file|stem|365c97950ee6f64c|b9b1b53c922f1480|ef46db3751d8e999|-1883133292|/Users/elisehellwig/Library/CloudStorage/GoogleDrive-echellwig@ucdavis.edu/My Drive/Transfer/Data/raster_file_names.csv|t19617.2279112481s|f8b29d4ea3aa6684|702|file|local|vector|||0.001||
+vec_labels|stem|1516caddc61b779d|e34f9a5992972d2f|446e8ac2d7b30614|922893282||t19648.9732105782s|88d3a5d6fadcfa47|483|rds|local|vector|||0||
+random_points|stem|3233a0b32c39b412|544c5f107b7ecafa|896ea1bb6aed084d|-33063662||t19648.9733471335s|ecd755dfda968987|881255|rds|local|vector|||11.254||
+species|stem|e676878712931c9c|192b8e605f737d77|92dcda735a427497|-954574027||t19648.9733472935s|24647c65900306d3|252|rds|local|vector|||0.001||
