@@ -5,7 +5,7 @@
 
 # Load packages required to define the pipeline:
 library(targets)
-# library(tarchetypes) # Load other packages as needed.
+library(tarchetypes) # Load other packages as needed.
 
 # Set target options:
 tar_option_set(
@@ -110,6 +110,7 @@ list(
     name = pa_data,
     command = extract_values(presence_points, random_points, raster_data)
   ),
+
   
   tar_target(
     name = enfa_model,
