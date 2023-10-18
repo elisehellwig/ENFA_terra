@@ -78,17 +78,17 @@ combine_presence_locations <- function(loc, acronyms) {
 
 extract_values <- function(pres, avail, env_data) {
   
-  all_pts <- rbind(pres[,c('Species', 'PA')], avail)
+  pres$UTMEW = pres$UTMNS = NULL
+  
+  all_pts <- rbind(pres, avail)
 
   all_pts$ID <- 1:nrow(all_pts)
   
-  pa_env <- terra::extract(env_data, all_pts, ID=TRUE)
+  pa_env <- terra::extract(env_data, all_pts, bind=TRUE)
   
-  pa_sv <- merge(all_pts, pa_env, by='ID')
-  
-  pa0 <- data.frame(pa_sv)
-  
-  high_ids <- which(pa0$Species!='Marfla' | pa0$Elevation > 2500)
+  pa0 <- data.frame(pa_env)
+
+    high_ids <- which(pa0$Species!='Marfla' | pa0$Elevation > 2500)
   
   pa <- pa0[high_ids, ]
 
